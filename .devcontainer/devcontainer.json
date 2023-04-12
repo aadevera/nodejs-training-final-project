@@ -5,8 +5,8 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:0-18",
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/devcontainers-contrib/features/localstack:2": {},
+		//"ghcr.io/devcontainers-contrib/features/localstack:2": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},		
 		"ghcr.io/devcontainers/features/aws-cli:1": {},
 		"ghcr.io/devcontainers-contrib/features/serverless:2": {}
 	},
@@ -23,7 +23,10 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"eamodio.gitlens",
-				"rangav.vscode-thunder-client"
+				"rangav.vscode-thunder-client",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"mongodb.mongodb-vscode"				
 			]
 		}
 	},
