@@ -1,14 +1,39 @@
-version: '3.7'
+version: '3.8'
 services:
-  mongodb_container:
-    image: mongo:latest
+  database:
+    image: 'bitnami/mongodb:latest'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_USER=root
+      - MONGODB_ROOT_PASSWORD=rootpassword
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     ports:
-      - 27017:27017
+      - '27017:27017'
     volumes:
-      - mongodb_data_container:/data/db
+      - 'mongo-db:/bitnami/mongodb'
+
+  localstack:
+    container_name: 'localstack_main'
+    image: localstack/localstack
+    restart: always
+    ports:
+      - '4566:4566' # LocalStack Gateway
+      - '4510-4559:4510-4559' # external services port range
+    environment:
+      - DEBUG=true
+      - PERSISTENCE=1
+      - DYNAMODB_SHARE_DB=1
+      - LAMBDA_EXECUTOR=docker-reuse
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - './localstack_data:/var/lib/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    networks:
+      default:
+        aliases:
+          - localhost.localstack.cloud # set this network aliases to expose localstack to other containers
 
 volumes:
-  mongodb_data_container:
+  mongo-db:
+  localstack_data:
