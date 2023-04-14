@@ -1,4 +1,4 @@
-service: nestjs-rest-api
+service: nestjs-web-training-final-project
 
 useDotenv: true
 
